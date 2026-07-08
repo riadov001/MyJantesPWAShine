@@ -1,0 +1,226 @@
+Voici la version finale complète, prête à copier-coller, avec ajout du responsive design + mobile friendly + respect du branding MyJantes :
+
+⸻
+
+Tu es un développeur senior full-stack spécialisé en React Native, PWA et backend SaaS.
+
+Ta mission est de mettre en place un système complet de dashboard atelier pour l’application MyJantes, incluant scoring employé, gestion des priorités et sécurisation des données, sans casser l’existant et en travaillant proprement, tout en prenant en compte l’API, les routes backend et l’application mobile.
+
+Règles obligatoires :
+
+Tu dois impérativement analyser tout le code existant avant de modifier quoi que ce soit.
+Tu ne dois jamais casser une fonctionnalité existante.
+Tu dois privilégier la réutilisation intelligente du code existant.
+
+Attention :
+
+* Réutiliser uniquement le code utile et propre
+* Ne pas créer de doublons
+* Ne pas laisser de code mort ou orphelin
+* Ne pas réutiliser du code inutile ou mal conçu
+
+Si une partie existante est mauvaise :
+
+* proposer une alternative propre
+* remplacer uniquement si nécessaire
+* supprimer proprement sans casser le reste
+
+Tu dois vérifier :
+
+* routes API existantes
+* navigation mobile
+* structure des données
+* base de données
+* logique métier
+
+Tu dois tester chaque modification côté backend, PWA et mobile.
+Tu dois livrer un système fonctionnel, propre, maintenable et cohérent visuellement.
+
+Objectif produit :
+
+Créer un dashboard atelier MyJantes avec trois niveaux : employé, admin et vue globale atelier, synchronisé entre backend, PWA et application mobile.
+
+1. Système de scoring employé
+
+Mettre en place un score basé sur :
+
+* nombre de dossiers traités
+* rapidité
+* respect des priorités
+
+Le score doit être calculé côté backend.
+Exposé via API.
+Affiché en temps réel sur mobile et PWA.
+Ajouter un classement simple entre employés.
+
+2. Gestion des priorités
+
+Chaque dossier doit avoir :
+priority: low | medium | urgent
+
+À faire :
+
+* ajout en base
+* support API
+* affichage mobile et PWA
+
+Tri automatique avec urgences en premier.
+Affichage visuel clair (couleur + badge).
+
+3. Dashboard atelier global
+
+Endpoint :
+GET /dashboard/atelier
+
+Retour :
+
+* en attente
+* en cours
+* terminés
+* urgences
+
+Utilisé par mobile et PWA.
+
+4. Dashboard employé
+
+Endpoint :
+GET /dashboard/employe/:id
+
+Retour :
+
+* tâches
+* priorités
+* score
+* progression
+
+5. Dashboard admin
+
+Endpoint :
+GET /dashboard/admin
+
+Retour :
+
+* performance employés
+* charge globale
+* tâches
+
+Ajouts :
+PATCH /tasks/:id/assign
+PATCH /tasks/:id/priority
+
+6. API et compatibilité mobile
+
+* vérifier toutes les routes existantes
+* rester backward compatible
+* ajouter sans casser
+* versionner si nécessaire
+
+Mettre à jour mobile :
+
+* appels API
+* nouveaux champs
+* affichage sans régression
+
+7. Structure backend
+
+Ajouter si nécessaire :
+
+* service scoring
+* module dashboard
+* logique tri priorité
+
+Architecture propre :
+controller / service / repository
+
+Réutiliser les services existants si pertinents.
+
+8. Sécurisation des données
+
+Mettre en place :
+
+* backup automatique
+* retry
+* fallback
+* protection perte données
+
+Objectif : zéro perte de devis.
+
+9. Synchronisation mobile
+
+* queue offline
+* sync automatique
+* gestion des conflits et doublons
+
+10. Responsive design et mobile first (obligatoire)
+
+Toute l’interface doit être :
+
+* responsive
+* mobile friendly
+* optimisée petits écrans
+
+Pour la PWA :
+
+* design adaptatif (desktop, tablette, mobile)
+* grilles flexibles
+* composants réactifs
+
+Pour mobile :
+
+* UX fluide
+* pas de surcharge visuelle
+* accès rapide aux actions
+
+11. Branding MyJantes (obligatoire)
+
+Respect strict du design existant :
+
+* couleurs
+* typographie
+* composants UI
+* spacing
+
+Ne pas casser la cohérence visuelle.
+Réutiliser les composants UI existants.
+Toute nouvelle UI doit s’intégrer parfaitement au design actuel.
+
+12. Objectif business
+
+Le produit doit être :
+
+* simple
+* rapide
+* visuel
+* professionnel
+* impressionnant dès la première utilisation
+
+Utilisé pour convaincre des garages.
+
+Plan d’exécution :
+
+1. Analyse complète code backend + mobile
+2. Identification du code réutilisable
+3. Nettoyage si nécessaire (sans casser)
+4. Proposition structure cible
+5. Implémentation :
+    * scoring
+    * priorités
+    * dashboard
+    * sécurisation
+6. Intégration mobile + PWA
+7. Responsive + UI cohérente
+8. Tests complets
+9. Validation finale sans régression
+
+Contraintes strictes :
+
+Interdiction de casser l’existant
+Interdiction de créer des doublons
+Interdiction de laisser du code mort
+Interdiction de faire du code partiel
+Interdiction d’ignorer l’impact mobile
+Interdiction de casser le design existant
+
+Résultat attendu :
+
+Un système complet, propre, responsive, mobile friendly, cohérent avec le branding MyJantes, avec dashboard, scoring, priorités, API compatible mobile, sans duplication, sans code inutile et sans aucune régression.

@@ -1,0 +1,472 @@
+{
+  "fredfich@gmail.com": [
+    {
+      "id": "b00aaffc-8561-442b-ba5a-1ac7b27da471",
+      "subject": "Confirmation de paiement - Facture VIR-04-0265",
+      "from": "MyJantes <contact@app.mytoolsgroup.eu>",
+      "cc": null,
+      "bcc": "contact@myjantes.com,r.belmahi@gmail.com,rbelmahi90@gmail.com",
+      "reply_to": null,
+      "status": "delivered",
+      "created_at": "2026-04-21 11:41:54.006034+00",
+      "sent_at": "2026-04-21 11:41:54.616+00"
+    }
+  ],
+  "joyce.lamihaul@gmail.com": [
+    {
+      "id": "59b4adeb-709d-4270-b2e7-261e5bb20e87",
+      "subject": "Confirmation de paiement - Facture VIR-04-0243",
+      "from": "MyJantes <contact@app.mytoolsgroup.eu>",
+      "cc": null,
+      "bcc": "contact@myjantes.com,r.belmahi@gmail.com,rbelmahi90@gmail.com",
+      "reply_to": null,
+      "status": "delivered",
+      "created_at": "2026-04-21 19:00:04.686471+00",
+      "sent_at": "2026-04-21 19:00:05.38+00"
+    }
+  ],
+  "aymeric.bouffart@live.fr": [
+    {
+      "id": "cea540be-86e0-4246-b920-3cda88599043",
+      "subject": "Confirmation de paiement - Facture VIR-04-0267",
+      "from": "MyJantes <contact@app.mytoolsgroup.eu>",
+      "cc": null,
+      "bcc": "contact@myjantes.com,r.belmahi@gmail.com,rbelmahi90@gmail.com",
+      "reply_to": null,
+      "status": "delivered",
+      "created_at": "2026-04-22 08:32:04.550684+00",
+      "sent_at": "2026-04-22 08:32:05.118+00"
+    }
+  ],
+  "thierry.bouffart@ipone.fr": [
+    {
+      "id": "b1b31f8e-a5b4-46d7-bc12-702acddbbefd",
+      "subject": "Confirmation de paiement - Facture VIR-04-0268",
+      "from": "MyJantes <contact@app.mytoolsgroup.eu>",
+      "cc": null,
+      "bcc": "contact@myjantes.com,r.belmahi@gmail.com,rbelmahi90@gmail.com",
+      "reply_to": null,
+      "status": "delivered",
+      "created_at": "2026-04-22 08:32:18.944678+00",
+      "sent_at": "2026-04-22 08:32:19.539+00"
+    }
+  ],
+  "stephane.rupek@orange.fr": [
+    {
+      "id": "70ef3971-7102-4d0f-8c69-bdb07e55b394",
+      "subject": "Confirmation de paiement - Facture VIR-04-0269",
+      "from": "MyJantes <contact@app.mytoolsgroup.eu>",
+      "cc": null,
+      "bcc": "contact@myjantes.com,r.belmahi@gmail.com,rbelmahi90@gmail.com",
+      "reply_to": null,
+      "status": "delivered",
+      "created_at": "2026-04-22 15:10:18.454122+00",
+      "sent_at": "NaN"
+    }
+  ],
+  "nicobarca@icloud.com": [
+    {
+      "id": "6d690671-07a0-44dc-858b-b8486707b797",
+      "subject": "Confirmation de paiement - Facture VIR-04-0270",
+      "from": "MyJantes <contact@app.mytoolsgroup.eu>",
+      "cc": null,
+      "bcc": "contact@myjantes.com,r.belmahi@gmail.com,rbelmahi90@gmail.com",
+      "reply_to": null,
+      "status": "delivered",
+      "created_at": "2026-04-22 15:51:55.265218+00",
+      "sent_at": "2026-04-22 15:51:55.836+00"
+    }
+  ],
+  "ascarrosseries@gmail.com": [
+    {
+      "id": "7801aae4-bc1d-4ec3-9aac-7f72fe12e333",
+      "subject": "Confirmation de paiement - Facture VIR-04-0246",
+      "from": "MyJantes <contact@app.mytoolsgroup.eu>",
+      "cc": null,
+      "bcc": "contact@myjantes.com,r.belmahi@gmail.com,rbelmahi90@gmail.com",
+      "reply_to": null,
+      "status": "delivered",
+      "created_at": "2026-04-22 15:53:11.57472+00",
+      "sent_at": "2026-04-22 15:53:12.184+00"
+    }
+  ],
+  "c.demilly@groupe-lempereur.com": [
+    {
+      "id": "ff97939e-2734-47ae-8290-b24d55ef735c",
+      "subject": "Facture VIR-04-0272 - MY JANTES",
+      "from": "MyJantes <contact@app.mytoolsgroup.eu>",
+      "cc": "g.varlet@myjantes.com",
+      "bcc": "contact@myjantes.com,r.belmahi@gmail.com,rbelmahi90@gmail.com",
+      "reply_to": null,
+      "status": "suppressed",
+      "created_at": "2026-04-24 07:54:24.997973+00",
+      "sent_at": "2026-04-24 07:54:25.865+00"
+    },
+    {
+      "id": "080e53f8-c4bb-423d-9c09-483b3ffff905",
+      "subject": "Facture VIR-04-0273 - MY JANTES",
+      "from": "MyJantes <contact@app.mytoolsgroup.eu>",
+      "cc": "contact@myjantes.com",
+      "bcc": "contact@myjantes.com,r.belmahi@gmail.com,rbelmahi90@gmail.com",
+      "reply_to": null,
+      "status": "delivered",
+      "created_at": "2026-04-24 12:15:43.035282+00",
+      "sent_at": "2026-04-24 12:15:43.851+00"
+    },
+    {
+      "id": "889dcf30-19eb-493a-84fe-260d06083cc6",
+      "subject": "Facture VIR-04-0273 - MY JANTES",
+      "from": "MyJantes <contact@app.mytoolsgroup.eu>",
+      "cc": "contact@myjantes.com",
+      "bcc": "contact@myjantes.com,r.belmahi@gmail.com,rbelmahi90@gmail.com",
+      "reply_to": null,
+      "status": "delivered",
+      "created_at": "2026-04-24 12:15:44.274037+00",
+      "sent_at": "2026-04-24 12:15:45.218+00"
+    },
+    {
+      "id": "80865efb-9bbb-4f9f-93a1-688785e932a1",
+      "subject": "Facture VIR-04-0274 - MY JANTES",
+      "from": "MyJantes <contact@app.mytoolsgroup.eu>",
+      "cc": "contact@myjantes.com",
+      "bcc": "contact@myjantes.com,r.belmahi@gmail.com,rbelmahi90@gmail.com",
+      "reply_to": null,
+      "status": "delivered",
+      "created_at": "2026-04-24 12:15:48.500487+00",
+      "sent_at": "2026-04-24 12:15:49.355+00"
+    }
+  ],
+  "dufresneal@wanadoo.fr": [
+    {
+      "id": "359fede4-5f57-4617-9495-ac0b76348acf",
+      "subject": "Confirmation de paiement - Facture VIR-04-0271",
+      "from": "MyJantes <contact@app.mytoolsgroup.eu>",
+      "cc": null,
+      "bcc": "contact@myjantes.com,r.belmahi@gmail.com,rbelmahi90@gmail.com",
+      "reply_to": null,
+      "status": "delivered",
+      "created_at": "2026-04-24 08:19:23.527018+00",
+      "sent_at": "2026-04-24 08:19:24.092+00"
+    }
+  ],
+  "contact@myjantes.com": [
+    {
+      "id": "63be5559-b7a6-42fc-9ca9-cf4e09c1f2c2",
+      "subject": "✅ Paiement enregistré — Facture  10228613136 (EDF) — 252.52 EUR",
+      "from": "MyTools Budget Tracker <contact@app.mytoolsgroup.eu>",
+      "cc": "rbelmahi90@gmail.com",
+      "bcc": null,
+      "reply_to": null,
+      "status": "delivered",
+      "created_at": "2026-04-25 13:13:19.659786+00",
+      "sent_at": "2026-04-25 13:13:19.927+00"
+    },
+    {
+      "id": "b43bf9b3-5d11-4367-b873-ba4eba533692",
+      "subject": "[MyJantes] Nouvelle réservation : Riad Belmahi - jeudi 30 avril 2026",
+      "from": "MyJantes <contact@app.mytoolsgroup.eu>",
+      "cc": null,
+      "bcc": null,
+      "reply_to": null,
+      "status": "delivered",
+      "created_at": "2026-04-27 05:45:27.313702+00",
+      "sent_at": "2026-04-27 05:45:27.598+00"
+    },
+    {
+      "id": "8f9f7c06-b467-4223-ad15-68155a4b5c4f",
+      "subject": "[MyJantes] Nouvelle réservation : Riad Belmahi - jeudi 30 avril 2026",
+      "from": "MyJantes <contact@app.mytoolsgroup.eu>",
+      "cc": null,
+      "bcc": "contact@myjantes.com,r.belmahi@gmail.com,rbelmahi90@gmail.com",
+      "reply_to": null,
+      "status": "delivered",
+      "created_at": "2026-04-27 08:11:41.688815+00",
+      "sent_at": "2026-04-27 08:11:42.262+00"
+    },
+    {
+      "id": "153f00ca-ec93-4697-a1f3-b3ed8ed5d19e",
+      "subject": "Vérifiez votre adresse email - MyTools App",
+      "from": "MyTools <contact@app.mytoolsgroup.eu>",
+      "cc": null,
+      "bcc": "rbelmahi90@gmail.com",
+      "reply_to": null,
+      "status": "delivered",
+      "created_at": "2026-04-29 15:48:37.880742+00",
+      "sent_at": "2026-04-29 15:48:38.173+00"
+    },
+    {
+      "id": "aefe9898-4d9c-474e-b8bf-f4004c273ea7",
+      "subject": "Code de réinitialisation — MyTools",
+      "from": "MyTools <contact@app.mytoolsgroup.eu>",
+      "cc": null,
+      "bcc": "rbelmahi90@gmail.com",
+      "reply_to": null,
+      "status": "delivered",
+      "created_at": "2026-05-01 08:43:26.97857+00",
+      "sent_at": "2026-05-01 08:43:27.262+00"
+    },
+    {
+      "id": "2033e6e3-bbd5-4f7f-9718-7aaa6eaa938d",
+      "subject": "Nouveau garage créé",
+      "from": "MyTools <contact@app.mytoolsgroup.eu>",
+      "cc": null,
+      "bcc": null,
+      "reply_to": null,
+      "status": "delivered",
+      "created_at": "2026-05-03 16:38:50.564165+00",
+      "sent_at": "2026-05-03 16:38:50.843+00"
+    }
+  ],
+  "dev.jatek@gmail.com": [
+    {
+      "id": "1f25cec5-4218-4afb-b0d3-2d535277d8f1",
+      "subject": "Vérifiez votre adresse email - MyTools App",
+      "from": "MyTools <contact@app.mytoolsgroup.eu>",
+      "cc": null,
+      "bcc": "rbelmahi90@gmail.com",
+      "reply_to": null,
+      "status": "delivered",
+      "created_at": "2026-04-25 23:58:20.078876+00",
+      "sent_at": "2026-04-25 23:58:20.369+00"
+    },
+    {
+      "id": "a9ea61be-b915-4fb2-bab7-3f67f099cb2c",
+      "subject": "Vérifiez votre adresse email - MyTools App",
+      "from": "MyTools <contact@app.mytoolsgroup.eu>",
+      "cc": null,
+      "bcc": "rbelmahi90@gmail.com",
+      "reply_to": null,
+      "status": "delivered",
+      "created_at": "2026-05-01 19:48:49.250318+00",
+      "sent_at": "2026-05-01 19:48:49.551+00"
+    }
+  ],
+  "g.varlet@myjantes.com": [
+    {
+      "id": "ffa1d556-7097-435f-9065-50ece8913473",
+      "subject": "[MyJantes] Nouvelle réservation : Riad Belmahi - jeudi 30 avril 2026",
+      "from": "MyJantes <contact@app.mytoolsgroup.eu>",
+      "cc": null,
+      "bcc": "contact@myjantes.com,r.belmahi@gmail.com,rbelmahi90@gmail.com",
+      "reply_to": null,
+      "status": "suppressed",
+      "created_at": "2026-04-27 05:45:25.089575+00",
+      "sent_at": "2026-04-27 05:45:25.659+00"
+    },
+    {
+      "id": "f6df5806-3634-40d6-bad2-e37f22c9f7e7",
+      "subject": "[MyJantes] Nouvelle réservation : Riad Belmahi - jeudi 30 avril 2026",
+      "from": "MyJantes <contact@app.mytoolsgroup.eu>",
+      "cc": null,
+      "bcc": "contact@myjantes.com,r.belmahi@gmail.com,rbelmahi90@gmail.com",
+      "reply_to": null,
+      "status": "suppressed",
+      "created_at": "2026-04-27 08:11:40.842238+00",
+      "sent_at": "2026-04-27 08:11:41.404+00"
+    }
+  ],
+  "naim.bela59@gmail.com": [
+    {
+      "id": "580d8c4b-587c-472f-a9c8-09b37601cbc9",
+      "subject": "[MyJantes] Nouvelle réservation : Riad Belmahi - jeudi 30 avril 2026",
+      "from": "MyJantes <contact@app.mytoolsgroup.eu>",
+      "cc": null,
+      "bcc": "contact@myjantes.com,r.belmahi@gmail.com,rbelmahi90@gmail.com",
+      "reply_to": null,
+      "status": "delivered",
+      "created_at": "2026-04-27 05:45:25.440023+00",
+      "sent_at": "2026-04-27 05:45:26.001+00"
+    },
+    {
+      "id": "8044ff27-9f1e-41b3-a8e7-506e7cc5bbe2",
+      "subject": "[MyJantes] Nouvelle réservation : Riad Belmahi - jeudi 30 avril 2026",
+      "from": "MyJantes <contact@app.mytoolsgroup.eu>",
+      "cc": null,
+      "bcc": "contact@myjantes.com,r.belmahi@gmail.com,rbelmahi90@gmail.com",
+      "reply_to": null,
+      "status": "delivered",
+      "created_at": "2026-04-27 08:11:41.274112+00",
+      "sent_at": "2026-04-27 08:11:41.865+00"
+    }
+  ],
+  "aris.hanevizian@hotmail.fr": [
+    {
+      "id": "02fea56c-7465-48cd-acae-2169b421dae0",
+      "subject": "Confirmation de paiement - Facture VIR-04-0276",
+      "from": "MyJantes <contact@app.mytoolsgroup.eu>",
+      "cc": null,
+      "bcc": "contact@myjantes.com,r.belmahi@gmail.com,rbelmahi90@gmail.com",
+      "reply_to": null,
+      "status": "delivered",
+      "created_at": "2026-04-27 07:53:26.847782+00",
+      "sent_at": "2026-04-27 07:53:27.401+00"
+    },
+    {
+      "id": "d4a445b0-6a2a-439d-8637-11bfb14d8ce7",
+      "subject": "Vérifiez votre adresse email - MyTools App",
+      "from": "MyTools <contact@app.mytoolsgroup.eu>",
+      "cc": null,
+      "bcc": null,
+      "reply_to": null,
+      "status": "delivered",
+      "created_at": "2026-05-03 16:38:50.285851+00",
+      "sent_at": "2026-05-03 16:38:50.59+00"
+    }
+  ],
+  "saltarelli.nicolas@orange.fr": [
+    {
+      "id": "fb9f9cc6-117a-4297-b427-24a42c071472",
+      "subject": "Devis N°DEV-04-00034 - MY JANTES - 516,00 €",
+      "from": "MyJantes <contact@app.mytoolsgroup.eu>",
+      "cc": "contact@myjantes.com",
+      "bcc": "contact@myjantes.com,r.belmahi@gmail.com,rbelmahi90@gmail.com",
+      "reply_to": null,
+      "status": "delivered",
+      "created_at": "2026-04-27 18:53:49.50543+00",
+      "sent_at": "2026-04-27 18:53:50.277+00"
+    }
+  ],
+  "sncmelo@gmail.com": [
+    {
+      "id": "d15582de-abd6-4173-a46e-df5a195353a2",
+      "subject": "Devis N°DEV-04-00036 - MY JANTES - 596,00 €",
+      "from": "MyJantes <contact@app.mytoolsgroup.eu>",
+      "cc": null,
+      "bcc": "contact@myjantes.com,r.belmahi@gmail.com,rbelmahi90@gmail.com",
+      "reply_to": null,
+      "status": "delivered",
+      "created_at": "2026-04-28 08:16:58.119973+00",
+      "sent_at": "2026-04-28 08:16:59.13+00"
+    }
+  ],
+  "romain.ma62@yahoo.fr": [
+    {
+      "id": "ffa977fe-7693-4e5e-8c8e-98de2f4e45c8",
+      "subject": "Devis N°DEV-04-00037 - MY JANTES - 556,00 €",
+      "from": "MyJantes <contact@app.mytoolsgroup.eu>",
+      "cc": "contact@myjantes.com",
+      "bcc": "contact@myjantes.com,r.belmahi@gmail.com,rbelmahi90@gmail.com",
+      "reply_to": null,
+      "status": "delivered",
+      "created_at": "2026-04-28 12:09:23.774117+00",
+      "sent_at": "2026-04-28 12:09:24.736+00"
+    }
+  ],
+  "looangel.5@hotmail.fR": [
+    {
+      "id": "08f8c59b-0d41-470c-bb4a-ce5b571bb50f",
+      "subject": "Devis N°DEV-04-00038 - MY JANTES - 447,00 €",
+      "from": "MyJantes <contact@app.mytoolsgroup.eu>",
+      "cc": null,
+      "bcc": "contact@myjantes.com,r.belmahi@gmail.com,rbelmahi90@gmail.com",
+      "reply_to": null,
+      "status": "delivered",
+      "created_at": "2026-04-28 14:01:34.631437+00",
+      "sent_at": "2026-04-28 14:01:35.528+00"
+    }
+  ],
+  "fahd.boudali+bm@outlook.com": [
+    {
+      "id": "02a6092e-cec1-44e8-ab85-73752c314510",
+      "subject": "Devis N°DEV-04-00039 - MY JANTES - 596,00 €",
+      "from": "MyJantes <contact@app.mytoolsgroup.eu>",
+      "cc": null,
+      "bcc": "contact@myjantes.com,r.belmahi@gmail.com,rbelmahi90@gmail.com",
+      "reply_to": null,
+      "status": "delivered",
+      "created_at": "2026-04-29 09:32:32.659466+00",
+      "sent_at": "2026-04-29 09:32:33.582+00"
+    }
+  ],
+  "by.taxi593@gmail.com": [
+    {
+      "id": "5ac515b6-288a-4dcb-b4fb-7ccfcd496a3b",
+      "subject": "Confirmation de paiement - Facture VIR-04-0277",
+      "from": "MyJantes <contact@app.mytoolsgroup.eu>",
+      "cc": null,
+      "bcc": "contact@myjantes.com,r.belmahi@gmail.com,rbelmahi90@gmail.com",
+      "reply_to": null,
+      "status": "delivered",
+      "created_at": "2026-04-29 15:17:25.327433+00",
+      "sent_at": "2026-04-29 15:17:25.899+00"
+    }
+  ],
+  "mbelkheirinejib28@gmail.com": [
+    {
+      "id": "7f321ac0-9aaa-4282-af22-42d66b077bb8",
+      "subject": "Devis N°DEV-04-00042 - MY JANTES - 516,00 €",
+      "from": "MyJantes <contact@app.mytoolsgroup.eu>",
+      "cc": "contact@myjantes.com",
+      "bcc": "contact@myjantes.com,r.belmahi@gmail.com,rbelmahi90@gmail.com",
+      "reply_to": null,
+      "status": "bounced",
+      "created_at": "2026-04-30 07:46:37.722928+00",
+      "sent_at": "2026-04-30 07:46:38.621+00"
+    }
+  ],
+  "rivieraspalille@gmail.com": [
+    {
+      "id": "e5a4da43-9059-4bb8-8a71-d91ccde5b118",
+      "subject": "Vérifiez votre adresse email - MyTools App",
+      "from": "MyTools <contact@app.mytoolsgroup.eu>",
+      "cc": null,
+      "bcc": "rbelmahi90@gmail.com",
+      "reply_to": null,
+      "status": "delivered",
+      "created_at": "2026-05-01 08:51:31.545431+00",
+      "sent_at": "2026-05-01 08:51:31.87+00"
+    }
+  ],
+  "johanmille73@gmail.com": [
+    {
+      "id": "94b044e0-4da8-4bfc-b962-23be50c484be",
+      "subject": "Devis N°DEV-05-00002 - MY JANTES - 476,00 €",
+      "from": "MyJantes <contact@app.mytoolsgroup.eu>",
+      "cc": null,
+      "bcc": "contact@myjantes.com,r.belmahi@gmail.com,rbelmahi90@gmail.com",
+      "reply_to": null,
+      "status": "delivered",
+      "created_at": "2026-05-04 12:05:38.388523+00",
+      "sent_at": "2026-05-04 12:05:39.305+00"
+    }
+  ],
+  "latelier.znd@gmail.com": [
+    {
+      "id": "6735fd09-feae-45e9-bb35-25d099fe1f60",
+      "subject": "Devis N°DEV-05-00003 - MY JANTES - 240,00 €",
+      "from": "MyJantes <contact@app.mytoolsgroup.eu>",
+      "cc": null,
+      "bcc": "contact@myjantes.com,r.belmahi@gmail.com,rbelmahi90@gmail.com",
+      "reply_to": null,
+      "status": "delivered",
+      "created_at": "2026-05-04 12:11:10.481966+00",
+      "sent_at": "2026-05-04 12:11:11.372+00"
+    }
+  ],
+  "belkheirinejib28@gmail.com": [
+    {
+      "id": "898ac3a6-f1a8-4721-ab94-90cb1100dcf8",
+      "subject": "Devis N°DEV-05-00005 - MY JANTES - 555,98 €",
+      "from": "MyJantes <contact@app.mytoolsgroup.eu>",
+      "cc": null,
+      "bcc": "contact@myjantes.com,r.belmahi@gmail.com,rbelmahi90@gmail.com",
+      "reply_to": null,
+      "status": "delivered",
+      "created_at": "2026-05-04 12:23:11.899152+00",
+      "sent_at": "2026-05-04 12:23:12.841+00"
+    }
+  ],
+  "remymasset59195@gmail.com": [
+    {
+      "id": "448dedfa-eb19-497f-a9c2-5b0cda5191cf",
+      "subject": "Devis N°DEV-05-00006 - MY JANTES - 120,00 €",
+      "from": "MyJantes <contact@app.mytoolsgroup.eu>",
+      "cc": null,
+      "bcc": "contact@myjantes.com,r.belmahi@gmail.com,rbelmahi90@gmail.com",
+      "reply_to": null,
+      "status": "delivered",
+      "created_at": "2026-05-04 13:17:31.50119+00",
+      "sent_at": "2026-05-04 13:17:32.406+00"
+    }
+  ]
+}

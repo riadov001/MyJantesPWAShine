@@ -1,0 +1,85 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "MyJantes API",
+    "description": "API pour l'application mobile MyJantes - Gestion de services automobiles",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://myjantes.replit.app/api",
+      "description": "Serveur de production"
+    }
+  ],
+  "paths": {
+    "/login": {
+      "post": {
+        "summary": "Authentification",
+        "tags": ["Auth"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": { "type": "string" },
+                  "password": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Succès" },
+          "401": { "description": "Identifiants invalides" }
+        }
+      }
+    },
+    "/auth/user": {
+      "get": {
+        "summary": "Récupérer l'utilisateur courant",
+        "tags": ["Auth"],
+        "responses": {
+          "200": { "description": "Détails de l'utilisateur" }
+        }
+      }
+    },
+    "/quotes": {
+      "get": {
+        "summary": "Liste des devis du client",
+        "tags": ["Quotes"],
+        "responses": {
+          "200": { "description": "Liste de devis" }
+        }
+      }
+    },
+    "/admin/quotes/{id}/media": {
+      "post": {
+        "summary": "Ajouter une photo à un devis",
+        "tags": ["Media"],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "fileName": { "type": "string" },
+                  "filePath": { "type": "string" },
+                  "fileType": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Photo ajoutée" }
+        }
+      }
+    }
+  }
+}

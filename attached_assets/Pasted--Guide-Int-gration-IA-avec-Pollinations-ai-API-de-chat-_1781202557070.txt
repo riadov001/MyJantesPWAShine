@@ -1,0 +1,592 @@
+# Guide — Intégration IA avec Pollinations.ai
+
+> API de chat IA gratuite, sans compte, sans clé API, compatible OpenAI.
+> Testé et fonctionnel dans : React Native (Expo), React, Vue, Svelte, Node.js, Python, Swift.
+
+---
+
+## Vérification rapide — tester en 30 secondes
+
+Avant tout code, vérifiez que l'endpoint répond depuis votre terminal :
+
+```bash
+curl -s -X POST https://text.pollinations.ai/openai \
+  -H "Content-Type: application/json" \
+  -d '{"model":"openai-large","messages":[{"role":"user","content":"Dis bonjour"}],"stream":false,"seed":1}' \
+  | python3 -m json.tool
+```
+
+Réponse attendue : un JSON avec `choices[0].message.content` contenant la réponse.
+Si ça fonctionne ici → ça fonctionnera dans votre app.
+
+---
+
+## Endpoint et paramètres essentiels
+
+```
+POST https://text.pollinations.ai/openai
+Content-Type: application/json
+```
+
+| Paramètre | Valeur | Obligatoire | Pourquoi |
+|-----------|--------|-------------|----------|
+| `model` | `"openai-large"` | ✅ | GPT-4o class — le plus capable gratuit |
+| `messages` | tableau `[{role, content}]` | ✅ | Historique complet à chaque requête |
+| `stream` | `false` | ✅ | Réponse complète en une fois — ne pas oublier |
+| `seed` | `Math.floor(Math.random() * 999999)` | ✅ | Empêche Pollinations de retourner une réponse en cache |
+| `private` | `true` | Recommandé | Empêche la réponse d'apparaître sur le feed public de Pollinations |
+
+**Modèles disponibles :**
+
+| `model` | Qualité | Vitesse |
+|---------|---------|---------|
+| `openai-large` | ⭐⭐⭐⭐⭐ GPT-4o | Normale (2-5s) |
+| `openai` | ⭐⭐⭐⭐ GPT-4o mini | Rapide (1-2s) |
+| `mistral` | ⭐⭐⭐⭐ Mistral Large | Normale |
+| `llama` | ⭐⭐⭐ LLaMA 3 | Rapide |
+
+---
+
+## Format de la requête et de la réponse
+
+**Requête :**
+```json
+{
+  "model": "openai-large",
+  "messages": [
+    { "role": "system",    "content": "Tu es un assistant utile." },
+    { "role": "user",      "content": "Quelle est la capitale de la France ?" }
+  ],
+  "stream": false,
+  "seed": 482910,
+  "private": true
+}
+```
+
+**Réponse :**
+```json
+{
+  "choices": [
+    {
+      "message": {
+        "role": "assistant",
+        "content": "La capitale de la France est Paris."
+      }
+    }
+  ]
+}
+```
+
+**Extraction :** `data.choices[0].message.content`
+
+---
+
+## Fonction de base — à copier-coller directement
+
+### TypeScript / JavaScript (navigateur, Node.js, React Native)
+
+> React Native utilise `fetch` natif — aucun package supplémentaire requis.
+
+```typescript
+type Role = "system" | "user" | "assistant";
+
+interface ChatMessage {
+  role: Role;
+  content: string;
+}
+
+const POLLINATIONS_URL = "https://text.pollinations.ai/openai";
+
+async function askAI(
+  messages: ChatMessage[],
+  timeoutMs = 30000
+): Promise<string> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    const res = await fetch(POLLINATIONS_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      signal: controller.signal,
+      body: JSON.stringify({
+        model: "openai-large",
+        messages,
+        stream: false,
+        private: true,
+        seed: Math.floor(Math.random() * 999999),
+      }),
+    });
+
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+    const data = await res.json();
+    const reply = data?.choices?.[0]?.message?.content ?? "";
+    if (!reply) throw new Error("Réponse vide");
+    return reply;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+```
+
+### Python
+
+```python
+import requests
+import random
+
+POLLINATIONS_URL = "https://text.pollinations.ai/openai"
+
+def ask_ai(messages: list[dict], timeout: int = 30) -> str:
+    response = requests.post(
+        POLLINATIONS_URL,
+        json={
+            "model": "openai-large",
+            "messages": messages,
+            "stream": False,
+            "private": True,
+            "seed": random.randint(0, 999999),
+        },
+        timeout=timeout,
+    )
+    response.raise_for_status()
+    return response.json()["choices"][0]["message"]["content"]
+```
+
+### Swift (iOS natif)
+
+```swift
+func askAI(messages: [[String: String]]) async throws -> String {
+    let url = URL(string: "https://text.pollinations.ai/openai")!
+    var request = URLRequest(url: url, timeoutInterval: 30)
+    request.httpMethod = "POST"
+    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+    let body: [String: Any] = [
+        "model": "openai-large",
+        "messages": messages,
+        "stream": false,
+        "private": true,
+        "seed": Int.random(in: 0..<999999)
+    ]
+    request.httpBody = try JSONSerialization.data(withJSONObject: body)
+
+    let (data, response) = try await URLSession.shared.data(for: request)
+    guard (response as? HTTPURLResponse)?.statusCode == 200 else {
+        throw URLError(.badServerResponse)
+    }
+    let json = try JSONSerialization.jsonObject(with: data) as! [String: Any]
+    let choices = json["choices"] as! [[String: Any]]
+    let message = choices[0]["message"] as! [String: Any]
+    return message["content"] as? String ?? ""
+}
+```
+
+### Kotlin (Android natif)
+
+```kotlin
+// Dépendance requise dans build.gradle : implementation("com.squareup.okhttp3:okhttp:4.12.0")
+import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONArray
+import org.json.JSONObject
+import java.util.concurrent.TimeUnit
+
+suspend fun askAI(messages: List<Map<String, String>>): String {
+    val client = OkHttpClient.Builder()
+        .connectTimeout(30, TimeUnit.SECONDS)
+        .readTimeout(30, TimeUnit.SECONDS)
+        .build()
+
+    val body = JSONObject().apply {
+        put("model", "openai-large")
+        put("messages", JSONArray(messages.map { JSONObject(it as Map<*, *>) }))
+        put("stream", false)
+        put("private", true)
+        put("seed", (0..999999).random())
+    }
+
+    val request = Request.Builder()
+        .url("https://text.pollinations.ai/openai")
+        .post(body.toString().toRequestBody("application/json".toMediaType()))
+        .build()
+
+    val response = client.newCall(request).execute()
+    if (!response.isSuccessful) throw Exception("HTTP ${response.code}")
+
+    val json = JSONObject(response.body!!.string())
+    return json.getJSONArray("choices")
+        .getJSONObject(0)
+        .getJSONObject("message")
+        .getString("content")
+}
+```
+
+---
+
+## Composants complets prêts à l'emploi
+
+### React Native — Chat complet (copier-coller dans un fichier .tsx)
+
+```tsx
+import React, { useState, useRef } from "react";
+import {
+  View, Text, TextInput, TouchableOpacity, ScrollView,
+  ActivityIndicator, KeyboardAvoidingView, Platform, StyleSheet,
+} from "react-native";
+
+type Role = "system" | "user" | "assistant";
+interface Message { role: Role; content: string; }
+
+const SYSTEM_PROMPT = "Tu es un assistant utile et bienveillant. Tu réponds toujours en français.";
+const URL = "https://text.pollinations.ai/openai";
+
+async function askAI(messages: Message[]): Promise<string> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 30000);
+  try {
+    const res = await fetch(URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      signal: controller.signal,
+      body: JSON.stringify({
+        model: "openai-large",
+        messages,
+        stream: false,
+        private: true,
+        seed: Math.floor(Math.random() * 999999),
+      }),
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    return data?.choices?.[0]?.message?.content ?? "";
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+export default function ChatScreen() {
+  const [history, setHistory] = useState<Message[]>([]);
+  const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
+  const scrollRef = useRef<ScrollView>(null);
+
+  const send = async () => {
+    if (!input.trim() || loading) return;
+    const userMsg: Message = { role: "user", content: input.trim() };
+    const newHistory = [...history, userMsg];
+    setHistory(newHistory);
+    setInput("");
+    setLoading(true);
+    try {
+      const reply = await askAI([
+        { role: "system", content: SYSTEM_PROMPT },
+        ...newHistory,
+      ]);
+      setHistory([...newHistory, { role: "assistant", content: reply }]);
+    } catch {
+      setHistory([...newHistory, {
+        role: "assistant",
+        content: "Erreur réseau. Vérifiez votre connexion et réessayez.",
+      }]);
+    } finally {
+      setLoading(false);
+      setTimeout(() => scrollRef.current?.scrollToEnd({ animated: true }), 100);
+    }
+  };
+
+  return (
+    <KeyboardAvoidingView style={s.container} behavior={Platform.OS === "ios" ? "padding" : undefined}>
+      <ScrollView ref={scrollRef} style={s.messages} contentContainerStyle={{ padding: 16, gap: 10 }}>
+        {history.map((m, i) => (
+          <View key={i} style={[s.bubble, m.role === "user" ? s.userBubble : s.aiBubble]}>
+            <Text style={m.role === "user" ? s.userText : s.aiText}>{m.content}</Text>
+          </View>
+        ))}
+        {loading && <ActivityIndicator style={{ marginTop: 8 }} />}
+      </ScrollView>
+      <View style={s.inputRow}>
+        <TextInput
+          style={s.input}
+          value={input}
+          onChangeText={setInput}
+          placeholder="Votre message…"
+          multiline
+          editable={!loading}
+        />
+        <TouchableOpacity style={[s.sendBtn, (!input.trim() || loading) && s.disabled]} onPress={send} disabled={!input.trim() || loading}>
+          <Text style={s.sendText}>Envoyer</Text>
+        </TouchableOpacity>
+      </View>
+    </KeyboardAvoidingView>
+  );
+}
+
+const s = StyleSheet.create({
+  container: { flex: 1, backgroundColor: "#fff" },
+  messages: { flex: 1 },
+  bubble: { maxWidth: "80%", borderRadius: 16, padding: 12 },
+  userBubble: { alignSelf: "flex-end", backgroundColor: "#2D8B6F" },
+  aiBubble: { alignSelf: "flex-start", backgroundColor: "#f0f0f0" },
+  userText: { color: "#fff", fontSize: 15 },
+  aiText: { color: "#111", fontSize: 15 },
+  inputRow: { flexDirection: "row", padding: 12, gap: 8, borderTopWidth: 1, borderColor: "#eee" },
+  input: { flex: 1, borderRadius: 20, borderWidth: 1, borderColor: "#ddd", paddingHorizontal: 14, paddingVertical: 8, fontSize: 15, maxHeight: 100 },
+  sendBtn: { borderRadius: 20, backgroundColor: "#2D8B6F", paddingHorizontal: 16, justifyContent: "center" },
+  sendText: { color: "#fff", fontWeight: "bold" },
+  disabled: { opacity: 0.4 },
+});
+```
+
+### React (web) — Chat complet (copier-coller dans un fichier .tsx)
+
+```tsx
+import { useState, useRef, useEffect } from "react";
+
+type Role = "system" | "user" | "assistant";
+interface Message { role: Role; content: string; }
+
+const SYSTEM_PROMPT = "Tu es un assistant utile et bienveillant. Tu réponds toujours en français.";
+const URL = "https://text.pollinations.ai/openai";
+
+async function askAI(messages: Message[]): Promise<string> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 30000);
+  try {
+    const res = await fetch(URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      signal: controller.signal,
+      body: JSON.stringify({
+        model: "openai-large",
+        messages,
+        stream: false,
+        private: true,
+        seed: Math.floor(Math.random() * 999999),
+      }),
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    return data?.choices?.[0]?.message?.content ?? "";
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+export default function Chat() {
+  const [history, setHistory] = useState<Message[]>([]);
+  const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
+  const bottomRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [history, loading]);
+
+  const send = async () => {
+    if (!input.trim() || loading) return;
+    const userMsg: Message = { role: "user", content: input.trim() };
+    const newHistory = [...history, userMsg];
+    setHistory(newHistory);
+    setInput("");
+    setLoading(true);
+    try {
+      const reply = await askAI([
+        { role: "system", content: SYSTEM_PROMPT },
+        ...newHistory,
+      ]);
+      setHistory([...newHistory, { role: "assistant", content: reply }]);
+    } catch {
+      setHistory([...newHistory, {
+        role: "assistant",
+        content: "Erreur réseau. Vérifiez votre connexion et réessayez.",
+      }]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", height: "100vh", maxWidth: 600, margin: "0 auto" }}>
+      <div style={{ flex: 1, overflowY: "auto", padding: 16, display: "flex", flexDirection: "column", gap: 10 }}>
+        {history.map((m, i) => (
+          <div key={i} style={{
+            alignSelf: m.role === "user" ? "flex-end" : "flex-start",
+            background: m.role === "user" ? "#2D8B6F" : "#f0f0f0",
+            color: m.role === "user" ? "#fff" : "#111",
+            padding: "10px 14px", borderRadius: 16, maxWidth: "80%", fontSize: 15,
+          }}>
+            {m.content}
+          </div>
+        ))}
+        {loading && <div style={{ color: "#999", fontSize: 13 }}>L'assistant réfléchit…</div>}
+        <div ref={bottomRef} />
+      </div>
+      <div style={{ display: "flex", gap: 8, padding: 12, borderTop: "1px solid #eee" }}>
+        <input
+          style={{ flex: 1, borderRadius: 20, border: "1px solid #ddd", padding: "8px 14px", fontSize: 15 }}
+          value={input}
+          onChange={e => setInput(e.target.value)}
+          onKeyDown={e => e.key === "Enter" && !e.shiftKey && (e.preventDefault(), send())}
+          placeholder="Votre message…"
+          disabled={loading}
+        />
+        <button
+          onClick={send}
+          disabled={!input.trim() || loading}
+          style={{ borderRadius: 20, background: "#2D8B6F", color: "#fff", border: "none", padding: "8px 16px", cursor: "pointer", fontWeight: "bold" }}
+        >
+          Envoyer
+        </button>
+      </div>
+    </div>
+  );
+}
+```
+
+---
+
+## Pattern conversation multi-tours
+
+L'API est **stateless** : envoyer l'historique complet à chaque requête.
+
+```
+[system]     → rôle de l'assistant (envoyé à CHAQUE requête, ne pas mettre dans l'historique affiché)
+[user]       → message 1 de l'utilisateur
+[assistant]  → réponse 1
+[user]       → message 2
+[assistant]  → réponse 2
+...
+```
+
+**Règle critique :** le `system` prompt est ajouté **devant** l'historique à chaque appel, mais **n'est pas stocké** dans l'historique affiché à l'utilisateur.
+
+```typescript
+// ✅ CORRECT
+const payload = [
+  { role: "system", content: systemPrompt }, // ajouté ici, pas dans history
+  ...history,                                 // historique user/assistant uniquement
+];
+
+// ❌ INCORRECT — system dans l'historique crée de la confusion
+history.push({ role: "system", content: systemPrompt });
+```
+
+---
+
+## System prompt — recette universelle
+
+```
+Tu es [NOM], un assistant [DOMAINE].
+Tu aides les utilisateurs avec [SUJET PRINCIPAL].
+Ton ton est [bienveillant / professionnel / pédagogue / amusant].
+Tu réponds toujours en [LANGUE] sauf si l'utilisateur écrit dans une autre langue.
+Tu ne discutes jamais de [SUJETS HORS PÉRIMÈTRE].
+```
+
+**Exemple concret :**
+```
+Tu es Anssam, un assistant islamique bienveillant et savant.
+Tu aides les musulmans dans leur vie spirituelle avec des réponses claires,
+authentiques et fondées sur le Coran et la Sunna.
+Ton ton est doux, encourageant et toujours positif.
+Tu réponds toujours en français sauf si l'utilisateur écrit dans une autre langue.
+```
+
+**Multi-langue :**
+```typescript
+const PROMPTS: Record<string, string> = {
+  fr: "Tu es [NOM]...",
+  en: "You are [NOM]...",
+  ar: "أنت [NOM]...",
+};
+const systemPrompt = PROMPTS[userLanguage] ?? PROMPTS.fr;
+```
+
+---
+
+## Gestion d'erreurs complète
+
+```typescript
+async function sendMessage(input: string) {
+  try {
+    setLoading(true);
+    const reply = await askAI(apiMessages);
+    // afficher reply
+  } catch (err: any) {
+    if (err?.name === "AbortError") {
+      // Timeout dépassé (30s)
+      showError("La réponse prend trop de temps. Réessayez.");
+    } else if (err?.message?.includes("HTTP 429")) {
+      // Rate limit
+      showError("Trop de requêtes. Attendez quelques secondes.");
+    } else if (err?.message?.includes("HTTP 5")) {
+      // Erreur serveur Pollinations
+      showError("Service temporairement indisponible. Réessayez.");
+    } else {
+      // Réseau ou autre
+      showError("Erreur de connexion. Vérifiez votre réseau.");
+    }
+  } finally {
+    setLoading(false);
+  }
+}
+```
+
+| Erreur | Cause | Solution |
+|--------|-------|----------|
+| `AbortError` | Timeout 30s dépassé | Réessayer, réduire l'historique |
+| `HTTP 429` | Rate limit IP | Attendre 10-30s |
+| `HTTP 500/503` | Serveur Pollinations down | Réessayer, afficher offline |
+| Réponse vide `""` | Prompt filtré ou trop long | Revoir le system prompt |
+| `Network Error` | Pas d'internet | Détecter offline avant l'appel |
+
+---
+
+## Gérer un historique trop long
+
+```typescript
+const MAX_MESSAGES = 20;
+
+// Option 1 — Garder les N derniers échanges
+const trimmed = history.slice(-MAX_MESSAGES);
+
+// Option 2 — Garder le 1er message + les N derniers (préserve le contexte initial)
+const trimmed = history.length > MAX_MESSAGES
+  ? [history[0], ...history.slice(-(MAX_MESSAGES - 1))]
+  : history;
+
+const payload = [
+  { role: "system", content: systemPrompt },
+  ...trimmed,
+];
+```
+
+---
+
+## Checklist nouveau projet
+
+- [ ] Tester l'endpoint avec la commande `curl` ci-dessus avant de coder
+- [ ] Copier la fonction `askAI` avec timeout (version TypeScript ou Python)
+- [ ] Ajouter `private: true` dans le body
+- [ ] Ajouter `seed: Math.random()` dans le body
+- [ ] Définir le `systemPrompt` — ne jamais l'inclure dans l'historique stocké
+- [ ] Gérer le cas `AbortError` (timeout) séparément des autres erreurs
+- [ ] Afficher un indicateur de chargement pendant l'appel (`loading` state)
+- [ ] Tronquer l'historique après 20 messages
+
+---
+
+## Limites connues
+
+| Limite | Valeur |
+|--------|--------|
+| Rate limit | ~10–20 req/min par IP utilisateur |
+| Fenêtre de contexte | ~16 000 tokens (≈ 12 000 mots) |
+| Latence | 2–8 secondes |
+| Timeout recommandé | 30 secondes |
+| Disponibilité | Pas de SLA (service gratuit) |
+
+> **Production critique** : prévoir un fallback vers l'API OpenAI officielle (payante, avec clé API) si Pollinations est indisponible.

@@ -1,0 +1,143 @@
+modules = ["nodejs-20", "web", "python-3.11", "postgresql-16"]
+run = "npm run dev"
+hidden = [".config", ".git", "generated-icon.png", "node_modules", "dist"]
+
+[nix]
+channel = "stable-24_05"
+packages = ["parallel-full", "railway", "unzip"]
+
+[deployment]
+deploymentTarget = "cloudrun"
+build = ["npm", "run", "build"]
+run = ["npm", "run", "start"]
+
+[[ports]]
+localPort = 5000
+externalPort = 80
+
+[[ports]]
+localPort = 8081
+externalPort = 8081
+
+[[ports]]
+localPort = 8082
+externalPort = 3002
+
+[[ports]]
+localPort = 23636
+externalPort = 3001
+
+[[ports]]
+localPort = 24678
+externalPort = 3000
+
+[env]
+PORT = "5000"
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Start application"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "EAS Submit iOS"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "EAS Build iOS"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Mobile App Preview"
+
+[[workflows.workflow]]
+name = "Start application"
+author = "agent"
+
+[workflows.workflow.metadata]
+outputType = "webview"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npm run dev"
+waitForPort = 5000
+
+[[workflows.workflow]]
+name = "EAS Submit iOS"
+author = "agent"
+
+[workflows.workflow.metadata]
+outputType = "console"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd mobile-app && EXPO_TOKEN=$Expo node_modules/.bin/eas submit --profile production --platform ios --latest --non-interactive"
+
+[[workflows.workflow]]
+name = "EAS Build iOS"
+author = "agent"
+
+[workflows.workflow.metadata]
+outputType = "console"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd mobile-app && EXPO_TOKEN=$Expo node_modules/.bin/eas build --profile production --platform ios --non-interactive"
+
+[[workflows.workflow]]
+name = "Mobile App Preview"
+author = "agent"
+
+[workflows.workflow.metadata]
+outputType = "console"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd mobile-app && EXPO_TOKEN=$Expo node_modules/.bin/expo start --web --port 8080"
+
+[agent]
+integrations = ["javascript_websocket:1.0.0", "javascript_log_in_with_replit:1.0.0", "javascript_database:1.0.0", "javascript_object_storage:2.0.0", "resend:1.0.0", "javascript_gemini_ai_integrations:2.0.0", "stripe:2.0.0", "twilio:1.0.0", "google-drive:1.0.0"]
+expertMode = true
+stack = "GAMESTACK_JS"
+
+[userenv]
+
+[userenv.shared]
+SMS_DISABLED = "true"
+DISABLE_AUTO_REMINDERS = "true"
+USE_DYNAMIC_DOMAIN = "true"
+SMS_PROVIDER = "twilio"
+TWILIO_FROM_NUMBER = "+16084707669"
+PLAID_ENV = "development"
+MINDEE_WEBHOOK_ID = "d1ff7b13-d865-48ef-a611-cee300257ba3"
+CLOUDFLARE_R2_REAL_ACCOUNT_ID = "a37d7bb74e76cd948c1ae51919e6bfc5"
+CLOUDFLARE_R2_PUBLIC_ENDPOINT = "https://a37d7bb74e76cd948c1ae51919e6bfc5.r2.cloudflarestorage.com"
+CLOUDFLARE_R2_BUCKET_OVERRIDE = "myjantes"
+RESEND_API_KEY = "re_eR8yDi6S_3BjQTUjyVCUW9ob267EdJxfP"
+RESEND_FROM_EMAIL = "MyJantes <contact@myjantes.mytoolsgroup.eu>"
+BRIDGE_CLIENT_SECRET = "sandbox_secret_OemTEAvqyIswqjZCkgUFgRMw7Ob4sR84BEJ2jjePYG8WKIUlVPRwR6vnEFWTRcPj"
+EMAIL_DISABLED = "false"
+BREVO_FROM_EMAIL = "MyJantes <contact@app.myjantes.fr>"
+GROK_API_KEY = "xai-g5qKJwEM5ZybZzpcZgte02k0I3xJvQ32E9wFCi0xKXmrg4bcT0PDf4aEyx9xz0hDGwTRFDNB2efztQg0"
+
+[userenv.development]
+BRIDGE_CLIENT_ID = "sandbox_id_da8d70e3e34a46a298d4e0f977dbb107"
+
+[userenv.production]
+PUBLIC_BASE_URL = "https://myjantespwa.myjantes.fr"
+BRIDGE_CLIENT_ID = "sandbox_id_da8d70e3e34a46a298d4e0f977dbb107"
+
+[objectStorage]
+defaultBucketID = "replit-objstore-2d303558-fc1b-4404-832e-17913d2bb836"
+
+[postMerge]
+path = "scripts/post-merge.sh"
+timeoutMs = 120000

@@ -1,0 +1,76 @@
+{
+  "cli": {
+    "version": ">= 12.0.0",
+    "appVersionSource": "remote",
+    "promptToConfigurePushNotifications": false
+  },
+  "build": {
+    "base": {
+      "node": "20.18.0",
+      "env": {
+        "EXPO_PUBLIC_API_BASE_URL": "https://app.myjantes.fr",
+        "EXPO_PUBLIC_FIREBASE_API_KEY": "AIzaSyDM2BqnhLvDaNMEGtSt19_u1GprRUcMKeI",
+        "EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN": "myjantesapp-pwa-gcp.firebaseapp.com",
+        "EXPO_PUBLIC_FIREBASE_PROJECT_ID": "myjantesapp-pwa-gcp",
+        "EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET": "myjantesapp-pwa-gcp.firebasestorage.app",
+        "EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID": "214383383859",
+        "EXPO_PUBLIC_FIREBASE_APP_ID": "1:214383383859:web:4d0c5dfca3b1d802ac1a46",
+        "EXPO_PUBLIC_FIREBASE_MEASUREMENT_ID": "G-DL922L0E7B"
+      }
+    },
+    "development": {
+      "extends": "base",
+      "developmentClient": true,
+      "distribution": "internal",
+      "channel": "development",
+      "ios": {
+        "simulator": true,
+        "resourceClass": "m-medium"
+      },
+      "android": {
+        "buildType": "apk",
+        "gradleCommand": ":app:assembleDebug"
+      }
+    },
+    "preview": {
+      "extends": "base",
+      "distribution": "internal",
+      "channel": "preview",
+      "ios": {
+        "simulator": false,
+        "resourceClass": "m-medium"
+      },
+      "android": {
+        "buildType": "apk"
+      }
+    },
+    "production": {
+      "extends": "base",
+      "channel": "production",
+      "autoIncrement": true,
+      "ios": {
+        "resourceClass": "m-medium",
+        "image": "latest"
+      },
+      "android": {
+        "buildType": "app-bundle"
+      }
+    }
+  },
+  "submit": {
+    "production": {
+      "ios": {
+        "appleId": "Saasmyjantes@gmail.com",
+        "ascAppId": "6759089662",
+        "appleTeamId": "GP593F562X",
+        "language": "fr-FR"
+      },
+      "android": {
+        "serviceAccountKeyPath": "../store-assets/google-play-service-account.json",
+        "track": "internal",
+        "releaseStatus": "draft",
+        "changesNotSentForReview": false
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "214383383859",
+    "project_id": "myjantesapp-pwa-gcp",
+    "storage_bucket": "myjantesapp-pwa-gcp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:214383383859:android:34f667daefaf9e9dac1a46",
+        "android_client_info": {
+          "package_name": "fr.myjantes.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC788TKRKpJa_-kITS4T-Do1QNwEzsf-9Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

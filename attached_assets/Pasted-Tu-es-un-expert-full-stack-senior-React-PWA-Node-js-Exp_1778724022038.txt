@@ -1,0 +1,77 @@
+Tu es un expert full-stack senior (React PWA + Node.js/Express + Offline First).
+
+**Projet** : Monorepo unique contenant à la fois :
+- La PWA React (frontend)
+- Le Backend Node.js / Express (dossier `server/` ou `backend/`)
+
+**RÈGLES ABSOLUES (à respecter strictement, à chaque étape) :**
+- Toujours analyser l’existant avant de modifier quoi que ce soit (fichiers, routes, composants, services, modèles).
+- AUCUNE régression : toutes les fonctionnalités existantes (mobile non concernée pour l’instant, mais API doit rester 100% compatible) doivent continuer à fonctionner exactement comme avant.
+- L’application (PWA) utilise EXCLUSIVEMENT l’API backend.
+- Travailler de façon incrémentale : une seule étape à la fois + commit Git suggéré après chaque étape.
+- Code propre, TypeScript strict, composants réutilisables, architecture claire.
+- Ultra simple, visuel, tactile et rapide pour un atelier (Geoffrey doit tout voir en un coup d’œil sur TV).
+
+### Objectif Final
+Implémenter le **Mode Atelier** complet (Kanban temps réel) sur la PWA, optimisé grand écran / TV, avec synchronisation offline robuste.
+
+### Fonctionnalités à implémenter (dans l’ordre)
+
+**1. Backend (Node.js/Express)**
+- Ajouter ou adapter les routes nécessaires sans casser les anciennes :
+  - GET    /api/dossiers (avec filtres : status, priority, search, date, etc.)
+  - PATCH  /api/dossiers/:id/status
+  - GET    /api/dossiers/stats (charge atelier, jantes, délais, urgences, retards)
+  - POST   /api/dossiers/:id/photos (multipart, multiple files)
+  - POST   /api/dossiers/:id/resolve (gestion conflits)
+- Modèle Dossier : ajouter `version`, `lastUpdated`, `conflictHistory`, `pendingOfflineChanges?`
+- Service `conflictResolver.ts` avec fusion automatique intelligente par champ (status, urgence, délai, notes, photos, etc.)
+- Gestion des timestamps et versioning pour offline
+
+**2. PWA – Mode Atelier (/atelier)**
+- Route protégée (PIN ou rôle admin), plein écran, mode sombre, TV-friendly (gros textes, contrastes élevés).
+- Kanban 8 colonnes draggable :
+  1. Réception → 2. En attente → 3. Préparation → 4. Réparation en cours → 5. Finition → 6. Contrôle qualité → 7. Terminé → 8. Restitution/Expédition
+- Carte dossier riche : client, véhicule, prestation, nb jantes, mini-photos, urgence (couleurs), délai (compteur + retard clignotant), etc.
+- Dashboard supérieur : Dossiers du jour / Urgences / Retards / Charge atelier / Jantes en cours / Délai moyen.
+- Filtres + recherche rapide.
+- Actualisation auto (20-30s) + WebSocket si déjà présent.
+
+**3. Synchronisation Offline Complète**
+- Dexie.js / IndexedDB + Mutation Queue
+- Drag & drop, changement statut, notes, photos → tout fonctionne offline
+- Auto-sync dès reconnexion avec retry + backoff
+- Indicateurs clairs : "Hors-ligne" / "Sync en cours" / "Synchronisé"
+
+**4. Gestion des Conflits + Fusion Automatique**
+- Versioning + lastUpdated
+- Fusion intelligente par champ (priorité statut/urgence/délai > notes/photos)
+- Fallback modal manuel seulement si nécessaire
+- Historique des conflits
+
+**5. Gestion Images Offline**
+- Capture / sélection photo même offline
+- Compression automatique (browser-image-compression) avant stockage :
+  - Max 1600px, qualité 75-82%, cible 150-400 KB
+  - Thumbnail 400px séparé
+- Gestion complète des erreurs (fallback, retry, quota IndexedDB, toasts clairs)
+- Upload queue avec reprise automatique
+
+### Méthodologie de Travail (à suivre à la lettre)
+**ÉTAPE 1** : Analyse complète de l’existant
+- Structure monorepo (frontend + server)
+- Routes API actuelles
+- State management PWA (TanStack Query / Zustand / Redux ?)
+- Gestion images et upload existante
+- PWA config (Service Worker, Vite, etc.)
+
+**ÉTAPE 2** : Proposition d’architecture détaillée (dossiers à créer, types partagés, services, etc.)
+
+Ensuite, une par une :
+- Backend (modèles + routes + conflictResolver)
+- Couche offline (Dexie, queue, imageService)
+- Composants PWA + Kanban + Drag & Drop (@dnd-kit)
+- Statistiques, filtres, UI TV
+- Tests offline / conflits / images
+
+Commence immédiatement par **l’ÉTAPE 1** : Analyse complète de l’existant dans le monorepo et donne ta proposition d’architecture globale pour tout le Mode Atelier + Offline.

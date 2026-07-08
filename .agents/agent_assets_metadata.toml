@@ -1,0 +1,67 @@
+uploads = []
+
+[[generated]]
+id = "wybpjnNeK35NIduC5Ct6I"
+uri = "file://store-assets/screenshots/gen/tablet-home.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "LgApgNBjKh2GX3PcaE1pU"
+uri = "file://store-assets/screenshots/gen/phone-reservation.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "YGfDV4dXaIu3_ds35Tiov"
+uri = "file://store-assets/screenshots/gen/phone-ar.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "pScUVpe4mg9-l5WGUMfX3"
+uri = "file://store-assets/screenshots/gen/phone-configurateur.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "6LkCcfe3BhptD5gMxpUsY"
+uri = "file://store-assets/screenshots/gen/phone-devis.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "l8cs-YWLXvOseeUR5vFvo"
+uri = "file://store-assets/screenshots/gen/tablet-reservation.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "s4OheDDrHl5rGrjmY7fe0"
+uri = "file://store-assets/screenshots/gen/tablet-profil.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "94RXV4EJtacv_rJBSnvqN"
+uri = "file://store-assets/screenshots/gen/tablet-devis.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "7EnpB55Egv8-YoNfjJuOU"
+uri = "file://store-assets/screenshots/gen/tablet-ar.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "3rP9S2PKzm2NnLD6CPbi2"
+uri = "file://store-assets/screenshots/gen/tablet-configurateur.png"
+type = "image"
+title = "generated_image"
+
+[[outputs]]
+id = "cWSHnQLhwpsqxlzaxvjls"
+uri = "file://rapport-isolement-myjantes.md"
+type = "text"
+title = "Rapport d'isolement MyJantes — 08/06/2026"

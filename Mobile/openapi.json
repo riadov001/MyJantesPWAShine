@@ -1,0 +1,329 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "MyJantes Mobile API",
+    "description": "API JWT pour l'application mobile MyJantes (iOS / Android). Toutes les routes sont préfixées par /api/mobile et utilisent l'authentification Bearer.",
+    "version": "2.0.0"
+  },
+  "servers": [
+    { "url": "https://app.myjantes.fr", "description": "Production" }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": { "type": "http", "scheme": "bearer", "bearerFormat": "JWT" }
+    },
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "email": { "type": "string", "format": "email" },
+          "firstName": { "type": "string" },
+          "lastName": { "type": "string" },
+          "phone": { "type": "string" },
+          "role": { "type": "string", "enum": ["client","client_professionnel","employe","admin","superadmin","rootadmin","root"] },
+          "garageId": { "type": "string" }
+        }
+      },
+      "AuthTokens": {
+        "type": "object",
+        "properties": {
+          "accessToken": { "type": "string" },
+          "refreshToken": { "type": "string" },
+          "tokenType": { "type": "string", "enum": ["Bearer"] },
+          "user": { "$ref": "#/components/schemas/User" }
+        }
+      },
+      "Service": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "basePrice": { "type": "string" },
+          "imageUrl": { "type": "string" }
+        }
+      },
+      "Quote": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "reference": { "type": "string" },
+          "clientId": { "type": "string" },
+          "serviceId": { "type": "string" },
+          "status": { "type": "string", "enum": ["pending","approved","accepted","rejected","completed"] },
+          "quoteAmount": { "type": "string" },
+          "createdAt": { "type": "string", "format": "date-time" }
+        }
+      },
+      "Invoice": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "invoiceNumber": { "type": "string" },
+          "amount": { "type": "string" },
+          "status": { "type": "string", "enum": ["pending","paid","overdue","cancelled"] },
+          "createdAt": { "type": "string", "format": "date-time" }
+        }
+      },
+      "Reservation": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "clientId": { "type": "string" },
+          "scheduledDate": { "type": "string", "format": "date-time" },
+          "estimatedEndDate": { "type": "string", "format": "date-time" },
+          "durationMinutes": { "type": "integer" },
+          "status": { "type": "string", "enum": ["pending","confirmed","in_progress","completed","cancelled"] },
+          "notes": { "type": "string" }
+        }
+      },
+      "Review": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "rating": { "type": "integer", "minimum": 1, "maximum": 5 },
+          "comment": { "type": "string" },
+          "clientName": { "type": "string" },
+          "createdAt": { "type": "string", "format": "date-time" }
+        }
+      },
+      "Garage": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "slug": { "type": "string" },
+          "logo": { "type": "string", "nullable": true },
+          "tagline": { "type": "string" },
+          "address": { "type": "string" },
+          "city": { "type": "string" },
+          "postalCode": { "type": "string" },
+          "phone": { "type": "string" },
+          "email": { "type": "string" },
+          "website": { "type": "string" },
+          "primaryColor": { "type": "string" },
+          "secondaryColor": { "type": "string" }
+        }
+      },
+      "DeviceToken": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "token": { "type": "string" },
+          "platform": { "type": "string", "enum": ["ios","android"] },
+          "appVersion": { "type": "string" },
+          "deviceModel": { "type": "string" },
+          "locale": { "type": "string" },
+          "isActive": { "type": "boolean" }
+        }
+      },
+      "PaymentIntentResult": {
+        "type": "object",
+        "properties": {
+          "clientSecret": { "type": "string" },
+          "paymentIntentId": { "type": "string" },
+          "amount": { "type": "integer" },
+          "currency": { "type": "string" },
+          "publishableKey": { "type": "string" }
+        }
+      }
+    }
+  },
+  "security": [{ "bearerAuth": [] }],
+  "paths": {
+    "/api/mobile/health": {
+      "get": {
+        "tags": ["Public"], "security": [],
+        "summary": "Liveness probe",
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/api/mobile/version": {
+      "get": {
+        "tags": ["Public"], "security": [],
+        "summary": "Version minimale / dernière version + maintenance",
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/api/mobile/garage": {
+      "get": {
+        "tags": ["Public"], "security": [],
+        "summary": "Informations du garage par défaut",
+        "responses": { "200": { "description": "OK", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Garage" } } } } }
+      }
+    },
+    "/api/mobile/payment/config": {
+      "get": {
+        "tags": ["Payments"], "security": [],
+        "summary": "Configuration Stripe (clé publique)",
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/api/mobile/public/services": {
+      "get": {
+        "tags": ["Public"], "security": [],
+        "summary": "Liste des services (publique)",
+        "responses": { "200": { "description": "OK", "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Service" } } } } } }
+      }
+    },
+    "/api/mobile/auth/login": {
+      "post": {
+        "tags": ["Auth"], "security": [],
+        "summary": "Login (JWT)",
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "type": "object", "required": ["email","password"], "properties": { "email": { "type": "string", "format": "email" }, "password": { "type": "string" } } } } }
+        },
+        "responses": { "200": { "description": "OK", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AuthTokens" } } } } }
+      }
+    },
+    "/api/mobile/refresh-token": {
+      "post": {
+        "tags": ["Auth"], "security": [],
+        "summary": "Échange refreshToken contre une nouvelle paire",
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "required": ["refreshToken"], "properties": { "refreshToken": { "type": "string" } } } } } },
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/api/mobile/auth/logout": {
+      "post": { "tags": ["Auth"], "summary": "Logout", "responses": { "200": { "description": "OK" } } }
+    },
+    "/api/mobile/auth/forgot-password": {
+      "post": {
+        "tags": ["Auth"], "security": [],
+        "summary": "Demande d'envoi d'un email de réinitialisation",
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "required": ["email"], "properties": { "email": { "type": "string", "format": "email" } } } } } },
+        "responses": { "200": { "description": "OK (toujours)" } }
+      }
+    },
+    "/api/mobile/auth/me": {
+      "get": { "tags": ["Auth"], "summary": "Utilisateur courant", "responses": { "200": { "description": "OK", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/User" } } } } } }
+    },
+    "/api/mobile/profile": {
+      "get": { "tags": ["Profile"], "summary": "Profil", "responses": { "200": { "description": "OK" } } },
+      "patch": { "tags": ["Profile"], "summary": "Modifier le profil", "responses": { "200": { "description": "OK" } } }
+    },
+    "/api/mobile/profile/avatar": {
+      "post": {
+        "tags": ["Profile"], "summary": "Uploader un avatar",
+        "requestBody": { "content": { "multipart/form-data": { "schema": { "type": "object", "properties": { "avatar": { "type": "string", "format": "binary" } } } } } },
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/api/mobile/services": {
+      "get": { "tags": ["Catalog"], "summary": "Services disponibles", "responses": { "200": { "description": "OK" } } }
+    },
+    "/api/mobile/quotes": {
+      "get": { "tags": ["Quotes"], "summary": "Mes devis", "responses": { "200": { "description": "OK" } } },
+      "post": { "tags": ["Quotes"], "summary": "Créer un devis", "responses": { "201": { "description": "Created" } } }
+    },
+    "/api/mobile/quotes/{id}": {
+      "get": { "tags": ["Quotes"], "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }], "responses": { "200": { "description": "OK" } } }
+    },
+    "/api/mobile/quotes/{id}/pdf": {
+      "get": { "tags": ["Quotes"], "summary": "PDF du devis", "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }], "responses": { "200": { "description": "application/pdf" } } }
+    },
+    "/api/mobile/quotes/{id}/view-link": {
+      "post": { "tags": ["Quotes"], "summary": "URL signée à partager", "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }], "responses": { "200": { "description": "OK" } } }
+    },
+    "/api/mobile/invoices": {
+      "get": { "tags": ["Invoices"], "summary": "Mes factures", "responses": { "200": { "description": "OK" } } }
+    },
+    "/api/mobile/invoices/{id}": {
+      "get": { "tags": ["Invoices"], "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }], "responses": { "200": { "description": "OK" } } }
+    },
+    "/api/mobile/invoices/{id}/pdf": {
+      "get": { "tags": ["Invoices"], "summary": "PDF de la facture", "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }], "responses": { "200": { "description": "application/pdf" } } }
+    },
+    "/api/mobile/invoices/{id}/payment-intent": {
+      "post": {
+        "tags": ["Payments"],
+        "summary": "Crée un PaymentIntent Stripe pour la facture",
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "OK", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PaymentIntentResult" } } } } }
+      }
+    },
+    "/api/mobile/reservations": {
+      "get": { "tags": ["Reservations"], "summary": "Mes réservations", "responses": { "200": { "description": "OK" } } },
+      "post": { "tags": ["Reservations"], "summary": "Créer une réservation", "responses": { "201": { "description": "Created" } } }
+    },
+    "/api/mobile/reservations/availability": {
+      "get": {
+        "tags": ["Reservations"],
+        "summary": "Créneaux disponibles",
+        "parameters": [
+          { "name": "year", "in": "query", "required": true, "schema": { "type": "integer" } },
+          { "name": "month", "in": "query", "required": true, "schema": { "type": "integer", "minimum": 1, "maximum": 12 } },
+          { "name": "duration", "in": "query", "schema": { "type": "integer", "default": 60 } }
+        ],
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/api/mobile/reservations/{id}": {
+      "get": { "tags": ["Reservations"], "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }], "responses": { "200": { "description": "OK" } } },
+      "patch": { "tags": ["Reservations"], "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }], "responses": { "200": { "description": "OK" } } },
+      "delete": { "tags": ["Reservations"], "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }], "responses": { "200": { "description": "OK" } } }
+    },
+    "/api/mobile/reviews": {
+      "get": {
+        "tags": ["Reviews"], "security": [],
+        "summary": "Liste des avis publiés",
+        "parameters": [{ "name": "limit", "in": "query", "schema": { "type": "integer", "default": 20 } }],
+        "responses": { "200": { "description": "OK", "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Review" } } } } } }
+      },
+      "post": {
+        "tags": ["Reviews"],
+        "summary": "Soumettre un avis",
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "required": ["rating"], "properties": { "rating": { "type": "integer", "minimum": 1, "maximum": 5 }, "comment": { "type": "string" }, "invoiceId": { "type": "string" } } } } } },
+        "responses": { "201": { "description": "Created" } }
+      }
+    },
+    "/api/mobile/notifications": {
+      "get": { "tags": ["Notifications"], "responses": { "200": { "description": "OK" } } }
+    },
+    "/api/mobile/notifications/unread-count": {
+      "get": { "tags": ["Notifications"], "responses": { "200": { "description": "OK" } } }
+    },
+    "/api/mobile/notifications/{id}/read": {
+      "patch": { "tags": ["Notifications"], "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }], "responses": { "200": { "description": "OK" } } }
+    },
+    "/api/mobile/notifications/mark-all-read": {
+      "post": { "tags": ["Notifications"], "responses": { "200": { "description": "OK" } } }
+    },
+    "/api/mobile/devices/register": {
+      "post": {
+        "tags": ["Push"],
+        "summary": "Enregistrer un device token (APNs / FCM)",
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "type": "object", "required": ["token","platform"], "properties": {
+            "token": { "type": "string" },
+            "platform": { "type": "string", "enum": ["ios","android"] },
+            "appVersion": { "type": "string" },
+            "deviceModel": { "type": "string" },
+            "locale": { "type": "string" }
+          } } } }
+        },
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/api/mobile/devices/{token}": {
+      "delete": { "tags": ["Push"], "parameters": [{ "name": "token", "in": "path", "required": true, "schema": { "type": "string" } }], "responses": { "200": { "description": "OK" } } }
+    },
+    "/api/mobile/devices": {
+      "get": { "tags": ["Push"], "summary": "Devices actifs de l'utilisateur", "responses": { "200": { "description": "OK" } } }
+    },
+    "/api/mobile/ocr/carte-grise": {
+      "post": {
+        "tags": ["OCR"],
+        "summary": "OCR carte grise",
+        "requestBody": { "content": { "multipart/form-data": { "schema": { "type": "object", "properties": { "file": { "type": "string", "format": "binary" } } } } } },
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/api/mobile/ai/assistant": {
+      "post": { "tags": ["AI"], "summary": "Assistant IA conversationnel", "responses": { "200": { "description": "OK" } } }
+    }
+  }
+}

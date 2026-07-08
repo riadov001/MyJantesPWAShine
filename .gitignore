@@ -1,0 +1,44 @@
+node_modules/
+dist/
+.DS_Store
+server/public
+vite.config.ts.*
+*.tar.gz
+.env
+.env.local
+*.log
+.cache/
+MiniJantes-v2.zip
+server/sync_data.json
+server/sync_data.json.done
+
+# Mobile build artefacts
+mobile-app/.expo
+mobile-app/.expo-shared
+mobile-app/ios
+mobile-app/android
+
+# Store secrets
+store-assets/google-play-service-account.json
+store-assets/AuthKey_*.p8
+
+# Environment & secrets — ne jamais committer
+.env
+.env.*
+.env.local
+.env.production
+.env.development
+*.secret
+secrets.json
+secrets.yaml
+secrets.yml
+*credentials*.json
+*serviceAccount*.json
+google-services.json
+GoogleService-Info.plist
+firebase-adminsdk*.json
+*.p8
+*.pem
+*.key
+*.pfx
+*.p12

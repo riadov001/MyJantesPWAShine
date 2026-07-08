@@ -1,0 +1,92 @@
+# MyJantes.fr — Site vitrine + Admin
+
+## Projet
+Site de rénovation de jantes alu basé à Liévin (62). Slogan : "L'expert de la jante alu".
+Stack : Express + Vite + React + PostgreSQL + Drizzle ORM + TailwindCSS + shadcn/ui.
+
+## Architecture
+- `client/` — Frontend React (Vite, wouter, TanStack Query)
+- `server/` — Backend Express (routes, storage, seed, vite dev server)
+- `shared/schema.ts` — Modèles Drizzle + Zod (users, contactRequests, blogPosts, galleryItems, testimonials, faqItems, siteServices, siteContent, conversations, messages)
+
+## Accès Admin
+- Route : `/admin`
+- Login : `contact@myjantes.com` / `MyJantes@2026!*`
+- Session stockée en PostgreSQL (connect-pg-simple), cookie 24h
+
+## Fonctionnalités Admin (CRUD complet)
+- **Contacts/Devis** : voir, rechercher, filtrer par statut, trier, changer statut (nouveau/en_cours/traite/annule), supprimer
+- **Galerie** : ajouter, modifier, publier/masquer, supprimer (titre, type, images URL, description, aperçu)
+- **Prestations** : ajouter, modifier, publier/masquer, supprimer — gère les cartes services dynamiquement (titre, description, image, badge, caractéristiques, tarif, slug, ordre)
+- **Avis clients** : ajouter, modifier, publier/masquer, supprimer (nom, ville, véhicule, note 1-5, commentaire)
+- **FAQ** : ajouter, modifier, publier/masquer, supprimer (question, réponse, catégorie, ordre)
+- **Contenu du site** : éditer toutes les sections ci-dessous
+
+## Contenu CMS (onglet Contenu dans admin)
+Categories et clés gérées dynamiquement :
+- **Header & Logo** : `header.logo_url`, `header.logo_size` (sm/md/lg/xl)
+- **Couleur du site** : `theme.color` (8 presets : red, blue, green, orange, purple, pink, teal, gold) — appliqué via CSS variables `--auto-red`, `--auto-red-dark`, `--auto-red-light`
+- **Typographie** : `typography.font`, `typography.heading_font`, `typography.font_size`, `typography.heading_scale`
+- **Hero** : badge, titre (2 lignes), sous-titre, CTA boutons, `hero.bg_video` (MP4), `hero.bg_image` (fallback)
+- **Statistiques** : 4 blocs JSON `stats`
+- **Bande de confiance** : `trust_items` JSON array (3 items)
+- **Contact** : phone, whatsapp, adresse, email
+- **Sections** : titres et sous-titres de chaque section
+- **Footer & Réseaux sociaux** : tagline, horaires, liens Instagram/Facebook/Snapchat/TikTok/Google
+
+## Composants globaux (App.tsx)
+- `ThemeApplier` : applique police + couleur CSS variables sur `document.documentElement` à chaque changement de siteContent
+- `FloatingButtons` : bouton flottant WhatsApp uniquement sur toutes les pages publiques
+- `CookieConsent` : bannière RGPD cookies (accepter/refuser, stocké en localStorage)
+
+## Intégration externe (CORS)
+- `appmyjantes.mytoolsgroup.eu` autorisé via CORS
+- POST `/api/contact` accepte les demandes cross-origin depuis l'espace client
+
+## SEO
+- Schema.org LocalBusiness (AutoRepair) structuré dans index.html
+- Open Graph + Twitter Cards configurés
+- Canonical URL, robots.txt (bloque /admin et /api/), sitemap.xml
+- Geo-tags (FR-62, Liévin, coordonnées GPS)
+- Keywords et meta descriptions optimisées par page
+- Composant `<SEO>` réutilisable sur chaque page
+
+## Pages
+- `/` Accueil (hero dynamique, services, comment ça marche, atelier, galerie, avis, app promo, CTA)
+- `/services` Détails des 6 services
+- `/galerie` Réalisations avant/après
+- `/a-propos` À propos
+- `/garanties` Garanties
+- `/contact` Formulaire + coordonnées + OCR IA (carte grise)
+- `/faq` FAQ dynamique
+- `/admin` Panel admin sécurisé avec CRUD complet
+- `/mentions-legales`, `/politique-confidentialite`
+
+## Notes techniques
+- Seed auto (server/seed.ts) : crée admin + données démo si vide, ajoute les clés manquantes à chaque redémarrage (idempotent)
+- Logo hero supprimé (seul le navbar affiche le logo)
+- "garantie*" partout (pas de "Garantie 12 mois")
+- "diamantage sur tour numérique" partout (pas de "Diamond cut")
+- Lien espace client → appmyjantes.mytoolsgroup.eu
+- Tailwind `auto-red/dark/light` utilisent des CSS variables pour le theming dynamique
+- Object storage configuré via Replit (bucket par défaut)
+- Slider avant/après interactif sur la galerie (`client/src/components/before-after-slider.tsx`) avec support souris, tactile et clavier
+
+## Variables d'environnement (secrets)
+- `DATABASE_URL` — Base de données dev (Replit PostgreSQL interne)
+- `PROD_DB_URL` — Base de données production (URL externe accessible en prod) — utilisée automatiquement quand `NODE_ENV=production`
+- `SESSION_SECRET` — Clé de session Express
+- `RESEND_API_KEY` — Clé API Resend pour l'envoi d'emails (priorité sur l'intégration Replit)
+- `RESEND_FROM_EMAIL` — Expéditeur email (ex: MyJantes <contact@myjantes.fr>)
+- `GOOGLE_API_KEY` — Clé Google API utilisée en fallback pour l'OCR Gemini si `AI_INTEGRATIONS_GEMINI_API_KEY` n'est pas disponible
+- `ADMIN_EMAIL` — Email admin (secret)
+
+## Logique de connexion DB
+- Dev : `DATABASE_URL` (hostname interne Replit)
+- Prod : `PROD_DB_URL` (si défini) sinon `DATABASE_URL`
+- Même logique dans `server/db.ts` et pour le pool de sessions dans `server/routes.ts`
+
+## Logique email (server/email.ts)
+- Utilise **Resend** via le SDK officiel (`resend` npm package)
+- Nécessite `RESEND_API_KEY` (secret Replit, déjà configuré)
+- Expéditeur : `RESEND_FROM_EMAIL` (env var) ou `MyJantes <contact@myjantes.fr>` par défaut
